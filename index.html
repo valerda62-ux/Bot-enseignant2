@@ -6,17 +6,19 @@
 <title>Bot Enseignant Automatique - Français Malagasy</title>
 <style>
     :root {
-        --primary: #2c3e50;
-        --secondary: #3498db;
-        --accent: #e74c3c;
-        --success: #27ae60;
-        --warning: #f39c12;
-        --light: #ecf0f1;
-        --dark: #2c3e50;
-        --gray: #95a5a6;
-        --light-gray: #f8f9fa;
-        --border: #e1e8ed;
-        --shadow: rgba(0, 0, 0, 0.08);
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --secondary: #059669;
+        --secondary-dark: #047857;
+        --accent: #dc2626;
+        --accent-dark: #b91c1c;
+        --light: #f8fafc;
+        --dark: #1e293b;
+        --gray: #64748b;
+        --light-gray: #f1f5f9;
+        --border: #e2e8f0;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
     
     * {
@@ -36,14 +38,15 @@
         padding: 20px;
         color: var(--dark);
         line-height: 1.6;
+        font-weight: 400;
     }
     
     .bot-container {
-        background: #fff;
-        padding: 30px;
+        background: #ffffff;
+        padding: 32px;
         border-radius: 16px;
-        box-shadow: 0 10px 30px var(--shadow);
-        max-width: 900px;
+        box-shadow: var(--shadow-lg);
+        max-width: 1000px;
         width: 100%;
         position: relative;
         overflow: hidden;
@@ -51,43 +54,44 @@
     
     .bot-header {
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 32px;
         position: relative;
     }
     
     .bot-avatar {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
-        background: var(--secondary);
-        margin: 0 auto 15px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        margin: 0 auto 16px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 28px;
-        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-        border: 3px solid white;
+        font-size: 32px;
+        box-shadow: var(--shadow);
+        border: 4px solid white;
     }
     
     .bot-header h2 {
         color: var(--dark);
         margin-bottom: 8px;
-        font-size: 24px;
-        font-weight: 600;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
     }
     
     .bot-subtitle {
         color: var(--gray);
-        font-size: 15px;
-        margin-bottom: 20px;
-        font-weight: 400;
+        font-size: 16px;
+        margin-bottom: 24px;
+        font-weight: 500;
     }
     
     .progress-container {
-        margin: 25px 0;
+        margin: 24px 0;
         background: var(--light-gray);
-        border-radius: 10px;
+        border-radius: 12px;
         height: 8px;
         overflow: hidden;
         position: relative;
@@ -95,8 +99,8 @@
     
     .progress-bar {
         height: 100%;
-        background: linear-gradient(90deg, var(--secondary), #2980b9);
-        border-radius: 10px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        border-radius: 12px;
         width: 0%;
         transition: width 0.5s ease;
         position: relative;
@@ -104,44 +108,45 @@
     
     .progress-text {
         text-align: center;
-        font-size: 13px;
+        font-size: 14px;
         color: var(--gray);
-        margin-top: 10px;
+        margin-top: 12px;
         font-weight: 500;
     }
     
     .navigation-buttons {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 25px;
+        margin-bottom: 24px;
         flex-wrap: wrap;
         gap: 12px;
     }
     
     .content-area {
-        min-height: 450px;
+        min-height: 500px;
         border: 1px solid var(--border);
         border-radius: 12px;
-        padding: 25px;
-        margin-bottom: 25px;
-        background: var(--light-gray);
+        padding: 28px;
+        margin-bottom: 24px;
+        background: var(--light);
         transition: all 0.3s ease;
     }
     
     .typing-indicator {
         display: none;
         text-align: center;
-        padding: 20px;
+        padding: 24px;
         color: var(--gray);
         font-style: italic;
         background: white;
-        border-radius: 8px;
+        border-radius: 12px;
         margin: 20px 0;
+        box-shadow: var(--shadow);
     }
     
     .typing-dots {
         display: inline-block;
-        margin-left: 5px;
+        margin-left: 8px;
     }
     
     .typing-dots span {
@@ -168,68 +173,69 @@
     
     .lesson-content {
         background: white;
-        padding: 25px;
+        padding: 28px;
         border-radius: 12px;
-        box-shadow: 0 2px 10px var(--shadow);
-        margin-bottom: 20px;
-        border-left: 4px solid var(--secondary);
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+        border-left: 4px solid var(--primary);
     }
     
     .lesson-title {
-        color: var(--primary);
-        font-weight: 600;
-        margin-bottom: 15px;
-        font-size: 20px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--border);
+        color: var(--dark);
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-size: 22px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid var(--light-gray);
+        letter-spacing: -0.025em;
     }
     
     .lesson-desc {
         line-height: 1.7;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
         color: var(--dark);
-        font-size: 15px;
+        font-size: 16px;
         background: var(--light-gray);
-        padding: 15px;
+        padding: 20px;
         border-radius: 8px;
-        border-left: 3px solid var(--secondary);
+        border-left: 4px solid var(--primary);
     }
     
     .language-tabs {
         display: flex;
-        margin-bottom: 20px;
-        border-bottom: 1px solid var(--border);
-        background: white;
-        border-radius: 8px 8px 0 0;
+        margin-bottom: 24px;
+        border-radius: 8px;
         overflow: hidden;
+        box-shadow: var(--shadow);
     }
     
     .language-tab {
-        padding: 12px 20px;
+        padding: 16px 24px;
         cursor: pointer;
-        border-bottom: 2px solid transparent;
         background: var(--light-gray);
         transition: all 0.3s ease;
         flex: 1;
         text-align: center;
-        font-weight: 500;
+        font-weight: 600;
+        color: var(--gray);
+        border: none;
+        font-size: 15px;
     }
     
     .language-tab.active {
-        border-bottom: 2px solid var(--secondary);
-        color: var(--secondary);
-        background: white;
+        background: var(--primary);
+        color: white;
         font-weight: 600;
     }
     
-    .language-tab:hover {
-        background: white;
+    .language-tab:hover:not(.active) {
+        background: #e2e8f0;
     }
     
     .language-content {
         display: none;
         background: white;
-        padding: 20px;
+        padding: 24px;
         border-radius: 0 0 8px 8px;
         line-height: 1.7;
     }
@@ -239,23 +245,24 @@
     }
     
     .language-content h4 {
-        color: var(--primary);
+        color: var(--dark);
+        margin: 24px 0 16px 0;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.025em;
+    }
+    
+    .language-content h5 {
+        color: var(--dark);
         margin: 20px 0 12px 0;
         font-weight: 600;
         font-size: 16px;
     }
     
-    .language-content h5 {
-        color: var(--dark);
-        margin: 18px 0 10px 0;
-        font-weight: 600;
-        font-size: 15px;
-    }
-    
     .language-content p {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
         color: var(--dark);
-        font-size: 15px;
+        font-size: 16px;
     }
     
     .language-content strong {
@@ -264,36 +271,45 @@
     }
     
     .language-content ul {
-        margin: 10px 0 15px 20px;
+        margin: 16px 0 20px 24px;
     }
     
     .language-content li {
-        margin-bottom: 8px;
+        margin-bottom: 12px;
+        position: relative;
+        padding-left: 8px;
+    }
+    
+    .language-content li:before {
+        content: "•";
+        color: var(--primary);
+        font-weight: bold;
+        margin-right: 12px;
     }
     
     .lesson-image {
         text-align: center;
-        font-size: 48px;
-        margin: 25px 0;
-        padding: 20px;
+        font-size: 56px;
+        margin: 28px 0;
+        padding: 24px;
         background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px var(--shadow);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
     }
     
     .exercise-content {
         background: white;
-        padding: 25px;
+        padding: 28px;
         border-radius: 12px;
-        box-shadow: 0 2px 10px var(--shadow);
-        border-left: 4px solid var(--success);
+        box-shadow: var(--shadow);
+        border-left: 4px solid var(--secondary);
     }
     
     .exercise-question {
         font-size: 18px;
-        margin-bottom: 25px;
-        font-weight: 500;
-        color: var(--primary);
+        margin-bottom: 24px;
+        font-weight: 600;
+        color: var(--dark);
         line-height: 1.6;
     }
     
@@ -303,54 +319,57 @@
         margin-bottom: 20px;
         text-align: center;
         background: var(--light-gray);
-        padding: 10px;
-        border-radius: 6px;
+        padding: 12px;
+        border-radius: 8px;
         font-weight: 500;
     }
     
     .input-group {
-        margin-bottom: 25px;
+        margin-bottom: 24px;
         position: relative;
     }
     
     input[type="text"] {
         width: 100%;
-        padding: 15px 50px 15px 18px;
+        padding: 16px 60px 16px 20px;
         font-size: 16px;
         border-radius: 8px;
-        border: 1px solid var(--border);
+        border: 2px solid var(--border);
         transition: all 0.3s;
         background: white;
         font-family: inherit;
+        font-weight: 500;
     }
     
     input[type="text"]:focus {
-        border-color: var(--secondary);
+        border-color: var(--primary);
         outline: none;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
     
     .voice-input-btn {
         position: absolute;
-        right: 10px;
+        right: 12px;
         top: 50%;
         transform: translateY(-50%);
         background: var(--light-gray);
         border: none;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
+        border-radius: 8px;
+        width: 44px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s;
         color: var(--gray);
+        font-size: 18px;
     }
     
     .voice-input-btn:hover {
-        background: var(--secondary);
+        background: var(--primary);
         color: white;
+        transform: translateY(-50%) scale(1.05);
     }
     
     .voice-input-btn.recording {
@@ -369,31 +388,32 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 25px;
+        margin-top: 24px;
     }
     
     button {
-        padding: 14px 22px;
+        padding: 16px 24px;
         font-size: 15px;
         border: none;
         border-radius: 8px;
-        background-color: var(--secondary);
-        color: #fff;
+        background: var(--primary);
+        color: white;
         cursor: pointer;
         transition: all 0.3s;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-weight: 500;
+        font-weight: 600;
         flex: 1;
-        min-width: 140px;
+        min-width: 160px;
+        letter-spacing: -0.025em;
     }
     
     button:hover {
-        background-color: #2980b9;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px var(--shadow);
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
     }
     
     button:active {
@@ -401,58 +421,59 @@
     }
     
     button.secondary {
-        background-color: var(--success);
+        background: var(--secondary);
     }
     
     button.secondary:hover {
-        background-color: #219653;
+        background: var(--secondary-dark);
     }
     
     button.accent {
-        background-color: var(--accent);
+        background: var(--accent);
     }
     
     button.accent:hover {
-        background-color: #c0392b;
+        background: var(--accent-dark);
     }
     
     button.outline {
-        background-color: transparent;
-        border: 1px solid var(--secondary);
-        color: var(--secondary);
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
     }
     
     button.outline:hover {
-        background-color: var(--secondary);
+        background: var(--primary);
         color: white;
     }
     
     .message {
-        margin: 25px 0;
-        font-size: 15px;
-        font-weight: 500;
-        padding: 18px;
+        margin: 24px 0;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 20px;
         border-radius: 8px;
         text-align: center;
         border-left: 4px solid transparent;
+        box-shadow: var(--shadow);
     }
     
     .success {
-        background-color: #d4f4e0;
-        color: #155724;
-        border-left-color: var(--success);
+        background: #f0fdf4;
+        color: #166534;
+        border-left-color: var(--secondary);
     }
     
     .error {
-        background-color: #fde8e8;
-        color: #721c24;
+        background: #fef2f2;
+        color: #991b1b;
         border-left-color: var(--accent);
     }
     
     .info {
-        background-color: #e3f2fd;
-        color: #0c5460;
-        border-left-color: var(--secondary);
+        background: #eff6ff;
+        color: #1e40af;
+        border-left-color: var(--primary);
     }
     
     .voice-controls {
@@ -465,52 +486,56 @@
     
     .oral-practice-content {
         background: white;
-        padding: 25px;
+        padding: 32px;
         border-radius: 12px;
-        box-shadow: 0 2px 10px var(--shadow);
-        border-left: 4px solid var(--warning);
+        box-shadow: var(--shadow);
+        border-left: 4px solid var(--accent);
         text-align: center;
     }
     
     .oral-practice-title {
-        color: var(--primary);
-        margin-bottom: 20px;
-        font-weight: 600;
-        font-size: 18px;
+        color: var(--dark);
+        margin-bottom: 24px;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: -0.025em;
     }
     
     .oral-instruction {
-        margin-bottom: 25px;
+        margin-bottom: 28px;
         color: var(--dark);
-        line-height: 1.6;
+        line-height: 1.7;
+        font-size: 16px;
     }
     
     .recording-controls {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
-        margin: 25px 0;
+        gap: 16px;
+        margin: 28px 0;
     }
     
     .record-btn {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         border: none;
         background: var(--light-gray);
         color: var(--gray);
-        font-size: 24px;
+        font-size: 28px;
         cursor: pointer;
         transition: all 0.3s;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: var(--shadow);
     }
     
     .record-btn:hover {
-        background: var(--secondary);
+        background: var(--primary);
         color: white;
+        transform: scale(1.05);
     }
     
     .record-btn.recording {
@@ -520,38 +545,39 @@
     }
     
     .recording-timer {
-        font-size: 14px;
+        font-size: 16px;
         color: var(--gray);
-        font-weight: 500;
+        font-weight: 600;
     }
     
     .audio-playback {
         width: 100%;
-        margin: 20px 0;
+        margin: 24px 0;
     }
     
     .send-audio-btn {
-        background: var(--success);
+        background: var(--secondary);
     }
     
     .send-audio-btn:hover {
-        background: #219653;
+        background: var(--secondary-dark);
     }
     
     .contact-form {
         display: none;
         background: white;
-        padding: 25px;
+        padding: 28px;
         border-radius: 12px;
-        box-shadow: 0 2px 10px var(--shadow);
+        box-shadow: var(--shadow);
         margin-top: 20px;
-        border-left: 4px solid var(--warning);
+        border-left: 4px solid var(--accent);
     }
     
     .contact-form h3 {
-        color: var(--primary);
-        margin-bottom: 15px;
-        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 20px;
     }
     
     .form-group {
@@ -561,24 +587,25 @@
     .form-group label {
         display: block;
         margin-bottom: 8px;
-        font-weight: 500;
+        font-weight: 600;
         color: var(--dark);
     }
     
     .form-group input, .form-group textarea {
         width: 100%;
-        padding: 14px 16px;
+        padding: 16px;
         border-radius: 8px;
-        border: 1px solid var(--border);
+        border: 2px solid var(--border);
         font-family: inherit;
         font-size: 15px;
         transition: all 0.3s;
+        font-weight: 500;
     }
     
     .form-group input:focus, .form-group textarea:focus {
-        border-color: var(--secondary);
+        border-color: var(--primary);
         outline: none;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
     
     .form-group textarea {
@@ -588,38 +615,39 @@
     
     .completion-message {
         text-align: center;
-        padding: 40px 30px;
+        padding: 48px 32px;
         background: white;
         border-radius: 12px;
-        box-shadow: 0 2px 10px var(--shadow);
+        box-shadow: var(--shadow);
     }
     
     .completion-message h3 {
-        color: var(--success);
-        margin-bottom: 15px;
-        font-size: 24px;
-        font-weight: 600;
+        color: var(--secondary);
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: 700;
     }
     
     .completion-message p {
-        margin-bottom: 10px;
+        margin-bottom: 16px;
         color: var(--dark);
-        font-size: 16px;
+        font-size: 18px;
     }
     
     .offline-notice {
-        background: #fff3cd;
-        color: #856404;
-        padding: 12px 16px;
+        background: #fffbeb;
+        color: #92400e;
+        padding: 16px;
         border-radius: 8px;
-        margin: 15px 0;
-        border-left: 4px solid var(--warning);
+        margin: 20px 0;
+        border-left: 4px solid var(--accent);
         font-size: 14px;
+        font-weight: 500;
     }
     
     @media (max-width: 768px) {
         .bot-container {
-            padding: 20px;
+            padding: 24px;
         }
         
         .content-area {
@@ -648,6 +676,14 @@
         
         .lesson-content, .exercise-content {
             padding: 20px;
+        }
+        
+        .bot-header h2 {
+            font-size: 24px;
+        }
+        
+        .lesson-title {
+            font-size: 20px;
         }
     }
 </style>
@@ -767,7 +803,7 @@
 </div>
 
 <script>
-// Les 10 leçons avec les titres demandés
+// Les 10 leçons complètes avec les titres demandés
 const lessons = [
     {
         id: 1,
@@ -842,17 +878,6 @@ const lessons = [
                     <li><strong>-sion</strong> : ny fahitalavitra, ny fanapahan-kevitra, ny fitiavan-tanindrazana</li>
                     <li><strong>-té</strong> : ny hatsarana, ny fahafahana, ny fahasalamana</li>
                 </ul>
-                
-                <h4>Ny Lahatsoratra Voafaritra</h4>
-                <p>• <strong>le</strong> - lahy tokana (le livre - ny boky)</p>
-                <p>• <strong>la</strong> - vavy tokana (la table - ny latabatra)</p>
-                <p>• <strong>l'</strong> - eo anoloan'ny zanatsoratra (l'école - ny sekoly)</p>
-                <p>• <strong>les</strong> - maro (les livres - ny boky)</p>
-                
-                <h4>Ny Lahatsoratra Tsy Voafaritra</h4>
-                <p>• <strong>un</strong> - lahy tokana (un livre - boky iray)</p>
-                <p>• <strong>une</strong> - vavy tokana (une table - latabatra iray)</p>
-                <p>• <strong>des</strong> - maro (des livres - boky sasany)</p>
             `
         },
         image: "📚",
@@ -917,20 +942,6 @@ const lessons = [
                 <p>• Izahay dia tokony</p>
                 <p>• Ianareo dia tokony</p>
                 <p>• Izy ireo dia tokony</p>
-                
-                <h4>Ny fampiasana samihafa amin'ny DEVOIR :</h4>
-                
-                <h5>1. Fanehoana ny adidy</h5>
-                <p>• <strong>Je dois étudier</strong> - Tsy maintsy mianatra aho</p>
-                <p>• <strong>Tu dois finir ton travail</strong> - Tsy maintsy avy vita ny asa ianao</p>
-                
-                <h5>2. Fanehoana ny mety hitranga</h5>
-                <p>• <strong>Il doit être fatigué</strong> - Angamba reraka izy</p>
-                <p>• <strong>Elle doit arriver bientôt</strong> - Mety ho avy any aoriana kely izy</p>
-                
-                <h5>3. Fanehoana ny torohevitra</h5>
-                <p>• <strong>Tu devrais te reposer</strong> - Tokony hiala sasatra ianao</p>
-                <p>• <strong>Nous devrions partir tôt</strong> - Tokony hiala aloha isika</p>
             `
         },
         image: "⚖️",
@@ -954,8 +965,387 @@ const lessons = [
                 correction: "Tu devrais visiter ce musée - expression de conseil"
             }
         ]
+    },
+    {
+        id: 3,
+        title: "LE TEMPS ET LES AUXILIAIRES",
+        titleMg: "NY FOTOANA SY NY MPANAMPY",
+        description: {
+            fr: "Comprendre les différents temps verbaux et l'utilisation des auxiliaires être et avoir.",
+            mg: "Ny fahatakarana ny fotoana samihafa amin'ny matoanteny sy ny fampiasana ny mpanampy être sy avoir."
+        },
+        content: {
+            fr: `
+                <h4>Les Auxiliaires ÊTRE et AVOIR</h4>
+                <p>Ces deux verbes sont essentiels pour former les temps composés.</p>
+                
+                <h4>Conjugaison des Auxiliaires au Présent</h4>
+                <p><strong>ÊTRE :</strong> je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont</p>
+                <p><strong>AVOIR :</strong> j'ai, tu as, il/elle a, nous avons, vous avez, ils/elles ont</p>
+                
+                <h4>Formation des Temps Composés</h4>
+                <p>• <strong>Passé composé</strong> : auxiliaire + participe passé</p>
+                <p>• <strong>Plus-que-parfait</strong> : auxiliaire à l'imparfait + participe passé</p>
+                <p>• <strong>Futur antérieur</strong> : auxiliaire au futur + participe passé</p>
+            `,
+            mg: `
+                <h4>Ny Mpanampy ÊTRE sy AVOIR</h4>
+                <p>Ireo matoanteny roa ireo dia tena ilaina amin'ny fananganana ny fotoana mitambatra.</p>
+            `
+        },
+        image: "⏰",
+        exercises: [
+            {
+                question: "Completez avec l'auxiliaire : Elle ___ mangé une pomme.",
+                questionMg: "Fenoy amin'ny mpanampy : Elle ___ mangé une pomme.",
+                answer: "a",
+                correction: "Elle a mangé une pomme - 'manger' utilise l'auxiliaire AVOIR"
+            },
+            {
+                question: "Completez : Nous ___ allés au cinéma.",
+                questionMg: "Fenoy : Nous ___ allés au cinéma.",
+                answer: "sommes",
+                correction: "Nous sommes allés au cinéma - 'aller' utilise l'auxiliaire ÊTRE"
+            }
+        ]
+    },
+    {
+        id: 4,
+        title: "TOUS LES SALUTATIONS QUOTIDIENNES",
+        titleMg: "NY FIARAHABANA ANDRO ANDROAMIN'NY",
+        description: {
+            fr: "Apprendre toutes les salutations utilisées dans la vie quotidienne en français.",
+            mg: "Fianarana ny fiarahabana rehetra ampiasaina amin'ny fiainana andavanandro amin'ny teny frantsay."
+        },
+        content: {
+            fr: `
+                <h4>Salutations selon le moment de la journée</h4>
+                
+                <h5>Le Matin (jusqu'à 12h)</h5>
+                <p>• <strong>Bonjour</strong> - Salutation standard</p>
+                <p>• <strong>Salut</strong> - Informel entre amis</p>
+                <p>• <strong>Bonne matinée</strong> - Quand on quitte quelqu'un le matin</p>
+                
+                <h5>L'Après-midi (12h-18h)</h5>
+                <p>• <strong>Bonjour</strong> - Toujours utilisé</p>
+                <p>• <strong>Bon après-midi</strong> - Quand on quitte quelqu'un l'après-midi</p>
+                
+                <h5>Le Soir (après 18h)</h5>
+                <p>• <strong>Bonsoir</strong> - Salutation du soir</p>
+                <p>• <strong>Bonne soirée</strong> - Quand on quitte quelqu'un le soir</p>
+                <p>• <strong>Bonne nuit</strong> - Avant d'aller dormir</p>
+            `,
+            mg: `
+                <h4>Fiarahabana araka ny fotoana amin'ny andro</h4>
+                
+                <h5>Ny Maraina (hatramin'ny 12h)</h5>
+                <p>• <strong>Bonjour</strong> - Fiarahabana mahazatra</p>
+                <p>• <strong>Salut</strong> - Tsy ara-pomba eo amin'ny namana</p>
+            `
+        },
+        image: "👋",
+        exercises: [
+            {
+                question: "Completez la salutation du matin : ___ !",
+                questionMg: "Fenoy ny fiarahabana maraina : ___ !",
+                answer: "bonjour",
+                correction: "Bonjour ! - Salutation standard pour le matin"
+            },
+            {
+                question: "Completez : ___ soir ! (salutation du soir)",
+                questionMg: "Fenoy : ___ soir ! (fiarahabana hariva)",
+                answer: "bonsoir",
+                correction: "Bonsoir ! - Salutation utilisée le soir"
+            }
+        ]
+    },
+    {
+        id: 5,
+        title: "LE GROUPE DE VERBES",
+        titleMg: "NY VONDROM-PANAMPY",
+        description: {
+            fr: "Comprendre les trois groupes de verbes en français et leurs conjugaisons.",
+            mg: "Ny fahatakarana ny vondrom-panampy telo amin'ny teny frantsay sy ny conjugation azy."
+        },
+        content: {
+            fr: `
+                <h4>Les Trois Groupes de Verbes</h4>
+                
+                <h5>1er Groupe : Verbes en -ER (sauf aller)</h5>
+                <p>• Exemples : parler, manger, chanter, danser</p>
+                <p>• Caractéristique : Verbes réguliers</p>
+                
+                <h5>2ème Groupe : Verbes en -IR</h5>
+                <p>• Exemples : finir, choisir, réussir, grandir</p>
+                <p>• Caractéristique : Verbes réguliers avec -iss- à certaines formes</p>
+                
+                <h5>3ème Groupe : Tous les autres verbes</h5>
+                <p>• Exemples : être, avoir, faire, dire, prendre, venir</p>
+                <p>• Caractéristique : Verbes irréguliers</p>
+            `,
+            mg: `
+                <h4>Ny Vondrom-panampy Telon'ny matoanteny</h4>
+                
+                <h5>1er Groupe : matoanteny amin'ny -ER (afa-tsy aller)</h5>
+                <p>• Ohatra : miteny, mihinana, mihira, mandihy</p>
+            `
+        },
+        image: "📝",
+        exercises: [
+            {
+                question: "À quel groupe appartient le verbe 'manger' ?",
+                questionMg: "Amin'ny vondrona inona no an'ny matoanteny 'manger' ?",
+                answer: "1",
+                correction: "Le verbe 'manger' appartient au 1er groupe (verbes en -ER)"
+            },
+            {
+                question: "Conjuguez 'finir' à la 3ème personne du singulier : il ___",
+                questionMg: "Conjuguez 'finir' amin'ny endrika tokana fahatelo : il ___",
+                answer: "finit",
+                correction: "Il finit - verbe du 2ème groupe"
+            }
+        ]
+    },
+    {
+        id: 6,
+        title: "EMPLOIS DU VERBE CUISINER DANS UNE PHRASE",
+        titleMg: "NY FAMPIASANA NY MATOANTENY CUISINER AMINNY FEHENTENY",
+        description: {
+            fr: "Maîtriser l'utilisation du verbe cuisiner dans différents contextes et phrases.",
+            mg: "Ny fahafantarana ny fampiasana ny matoanteny cuisiner amin'ny fehenteny sy toe-javatra samihafa."
+        },
+        content: {
+            fr: `
+                <h4>Le Verbe CUISINER - Conjugaison</h4>
+                <p>• Je cuisine</p>
+                <p>• Tu cuisines</p>
+                <p>• Il/Elle cuisine</p>
+                <p>• Nous cuisinons</p>
+                <p>• Vous cuisinez</p>
+                <p>• Ils/Elles cuisinent</p>
+                
+                <h4>Différents emplois de CUISINER</h4>
+                
+                <h5>1. Action de préparer des aliments</h5>
+                <p>• <strong>Je cuisine le dîner</strong> - I cook dinner</p>
+                <p>• <strong>Elle cuisine très bien</strong> - She cooks very well</p>
+                
+                <h5>2. Profession ou hobby</h5>
+                <p>• <strong>Il cuisine dans un restaurant</strong> - He cooks in a restaurant</p>
+                <p>• <strong>Nous cuisinons pour nos amis</strong> - We cook for our friends</p>
+            `,
+            mg: `
+                <h4>Ny matoanteny CUISINER - Conjugation</h4>
+                <p>• Izaho mahandro</p>
+                <p>• Ianão mahandro</p>
+                <p>• Izy mahandro</p>
+            `
+        },
+        image: "👨‍🍳",
+        exercises: [
+            {
+                question: "Completez : Je ___ le dîner ce soir.",
+                questionMg: "Fenoy : Je ___ le dîner ce soir.",
+                answer: "cuisine",
+                correction: "Je cuisine le dîner ce soir - action au présent"
+            },
+            {
+                question: "Completez : Elles ___ pour leurs enfants.",
+                questionMg: "Fenoy : Elles ___ pour leurs enfants.",
+                answer: "cuisinent",
+                correction: "Elles cuisinent pour leurs enfants - pluriel féminin"
+            }
+        ]
+    },
+    {
+        id: 7,
+        title: "EMPLOIS TOUS LES PRÉPOSITIONS AVEC UNE PHRASE ET LEUR SENS UNIQUEMENT",
+        titleMg: "NY FAMPIASANA NY PREPOSITION REHETRA AMINNY FEHENTENY SY NY HEOHEVINY MANOKANA",
+        description: {
+            fr: "Comprendre toutes les prépositions françaises et leurs sens spécifiques dans des phrases.",
+            mg: "Ny fahatakarana ny preposition frantsay rehetra sy ny heviny manokana amin'ny fehenteny."
+        },
+        content: {
+            fr: `
+                <h4>Les Prépositions Essentielles</h4>
+                
+                <h5>À - Utilisations principales</h5>
+                <p>• <strong>Lieu</strong> : Je vais à Paris</p>
+                <p>• <strong>Moment</strong> : À demain, à 8 heures</p>
+                <p>• <strong>Manière</strong> : À pied, à vélo</p>
+                
+                <h5>DE - Utilisations principales</h5>
+                <p>• <strong>Origine</strong> : Je viens de France</p>
+                <p>• <strong>Appartenance</strong> : Le livre de Paul</p>
+                <p>• <strong>Matière</strong> : Une table de bois</p>
+            `,
+            mg: `
+                <h4>Ny Preposition Tena Ilaina</h4>
+                
+                <h5>À - Fampiasana fototra</h5>
+                <p>• <strong>Toerana</strong> : Handeha any Paris aho</p>
+            `
+        },
+        image: "📍",
+        exercises: [
+            {
+                question: "Completez : Je vais ___ Paris.",
+                questionMg: "Fenoy : Je vais ___ Paris.",
+                answer: "à",
+                correction: "Je vais à Paris - préposition de lieu pour les villes"
+            },
+            {
+                question: "Completez : Il vient ___ France.",
+                questionMg: "Fenoy : Il vient ___ France.",
+                answer: "de",
+                correction: "Il vient de France - préposition d'origine"
+            }
+        ]
+    },
+    {
+        id: 8,
+        title: "APPRENDRE LES TEMPS COMPOSÉS ET LE TEMPS SIMPLE",
+        titleMg: "FIANARANA NY FOTOANA MITAMBATRA SY NY FOTOANA TSOTRA",
+        description: {
+            fr: "Maîtriser la différence entre les temps simples et les temps composés en français.",
+            mg: "Ny fahafantarana ny fahasamihafana eo amin'ny fotoana tsotra sy ny fotoana mitambatra amin'ny teny frantsay."
+        },
+        content: {
+            fr: `
+                <h4>Les Temps Simples</h4>
+                <p>Les temps simples se conjuguent en un seul mot.</p>
+                
+                <h5>Présent de l'indicatif</h5>
+                <p>• Action actuelle ou habituelle</p>
+                <p>• Exemple : Je mange une pomme</p>
+                
+                <h5>Imparfait</h5>
+                <p>• Action passée habituelle ou description</p>
+                <p>• Exemple : Quand j'étais jeune, je jouais au football</p>
+                
+                <h5>Futur simple</h5>
+                <p>• Action future</p>
+                <p>• Exemple : Je viendrai demain</p>
+            `,
+            mg: `
+                <h4>Ny Fotoana Tsotra</h4>
+                <p>Ny fotoana tsotra dia conjugaison amin'ny teny iray.</p>
+            `
+        },
+        image: "⏳",
+        exercises: [
+            {
+                question: "Quel temps est 'je mange' ?",
+                questionMg: "Inona ny fotoana amin'ny 'je mange' ?",
+                answer: "présent",
+                correction: "'je mange' est au présent - temps simple"
+            },
+            {
+                question: "Quel temps est 'j'ai mangé' ?",
+                questionMg: "Inona ny fotoana amin'ny 'j'ai mangé' ?",
+                answer: "passé composé",
+                correction: "'j'ai mangé' est au passé composé - temps composé"
+            }
+        ]
+    },
+    {
+        id: 9,
+        title: "APPRENDRE TOUS LES PARTICIPES PASSÉS POSSIBLES",
+        titleMg: "FIANARANA NY PARTICIPE PASSÉ REHETRA AZO ATAO",
+        description: {
+            fr: "Maîtriser la formation et l'accord de tous les participes passés en français.",
+            mg: "Ny fahafantarana ny fananganana sy ny fifanarahana ny participe passé rehetra amin'ny teny frantsay."
+        },
+        content: {
+            fr: `
+                <h4>Qu'est-ce qu'un Participe Passé ?</h4>
+                <p>Le participe passé est une forme verbale utilisée dans les temps composés.</p>
+                
+                <h4>Formation des Participes Passés</h4>
+                
+                <h5>1er Groupe (-ER) → -É</h5>
+                <p>• Parler → parlé</p>
+                <p>• Manger → mangé</p>
+                <p>• Danser → dansé</p>
+                
+                <h5>2ème Groupe (-IR) → -I</h5>
+                <p>• Finir → fini</p>
+                <p>• Choisir → choisi</p>
+                <p>• Réussir → réussi</p>
+                
+                <h5>3ème Groupe - Formes irrégulières</h5>
+                <p>• Avoir → eu</p>
+                <p>• Être → été</p>
+                <p>• Faire → fait</p>
+                <p>• Prendre → pris</p>
+                <p>• Venir → venu</p>
+            `,
+            mg: `
+                <h4>Inona ny Participe Passé ?</h4>
+                <p>Ny participe passé dia endrika matoanteny ampiasaina amin'ny fotoana mitambatra.</p>
+            `
+        },
+        image: "📄",
+        exercises: [
+            {
+                question: "Quel est le participe passé de 'manger' ?",
+                questionMg: "Inona ny participe passé amin'ny 'manger' ?",
+                answer: "mangé",
+                correction: "mangé - verbe du 1er groupe"
+            },
+            {
+                question: "Quel est le participe passé de 'finir' ?",
+                questionMg: "Inona ny participe passé amin'ny 'finir' ?",
+                answer: "fini",
+                correction: "fini - verbe du 2ème groupe"
+            }
+        ]
+    },
+    {
+        id: 10,
+        title: "APPRENDRE TOUS LES ADJECTIFS",
+        titleMg: "FIANARANA NY ADJECTIF REHETRA",
+        description: {
+            fr: "Maîtriser les adjectifs français : accord, position et utilisation.",
+            mg: "Ny fahafantarana ny adjective frantsay : fifanarahana, toerana ary fampiasana."
+        },
+        content: {
+            fr: `
+                <h4>Qu'est-ce qu'un Adjectif ?</h4>
+                <p>Un adjectif qualificatif donne une caractéristique à un nom.</p>
+                
+                <h4>Accord des Adjectifs</h4>
+                <p>Les adjectifs s'accordent en genre et en nombre avec le nom qu'ils qualifient.</p>
+                
+                <h5>Accord avec le genre</h5>
+                <p>• Masculin : un livre intéressant</p>
+                <p>• Féminin : une histoire intéressante</p>
+                
+                <h5>Accord avec le nombre</h5>
+                <p>• Singulier : un enfant intelligent</p>
+                <p>• Pluriel : des enfants intelligents</p>
+            `,
+            mg: `
+                <h4>Inona ny Adjective ?</h4>
+                <p>Adjectif qualificatif dia manome toetra ho an'ny anarana.</p>
+            `
+        },
+        image: "🎨",
+        exercises: [
+            {
+                question: "Accordez l'adjectif : un livre ___ (intéressant)",
+                questionMg: "Araho ny adjective : un livre ___ (intéressant)",
+                answer: "intéressant",
+                correction: "un livre intéressant - masculin singulier"
+            },
+            {
+                question: "Accordez : une histoire ___ (intéressant)",
+                questionMg: "Araho : une histoire ___ (intéressant)",
+                answer: "intéressante",
+                correction: "une histoire intéressante - féminin singulier"
+            }
+        ]
     }
-    // Les autres leçons continueraient ici...
 ];
 
 // Récupérer l'état depuis localStorage
