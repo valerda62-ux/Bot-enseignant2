@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bot Enseignant Automatique - Français Malagasy</title>
+<style>
+    :root {
+        --primary: #2c3e50;
+        --secondary: #3498db;
+        --accent: #e74c3c;
+        --success: #27ae60;
+        --warning: #f39c12;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --light-gray: #f8f9fa;
+        --border: #e1e8ed;
+        --shadow: rgba(0, 0, 0, 0.08);
+    }
+    
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        color: var(--dark);
+        line-height: 1.6;
+    }
+    
+    .bot-container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px var(--shadow);
+        max-width: 900px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .bot-header {
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    .bot-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: var(--secondary);
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        border: 3px solid white;
+    }
+    
+    .bot-header h2 {
+        color: var(--dark);
+        margin-bottom: 8px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    
+    .bot-subtitle {
+        color: var(--gray);
+        font-size: 15px;
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
+    
+    .progress-container {
+        margin: 25px 0;
+        background: var(--light-gray);
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--secondary), #2980b9);
+        border-radius: 10px;
+        width: 0%;
+        transition: width 0.5s ease;
+        position: relative;
+    }
+    
+    .progress-text {
+        text-align: center;
+        font-size: 13px;
+        color: var(--gray);
+        margin-top: 10px;
+        font-weight: 500;
+    }
+    
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .content-area {
+        min-height: 450px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        background: var(--light-gray);
+        transition: all 0.3s ease;
+    }
+    
+    .typing-indicator {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        color: var(--gray);
+        font-style: italic;
+        background: white;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+    
+    .typing-dots {
+        display: inline-block;
+        margin-left: 5px;
+    }
+    
+    .typing-dots span {
+        animation: typing 1.5s infinite;
+        display: inline-block;
+    }
+    
+    .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes typing {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 1; }
+    }
+    
+    .lesson-section, .exercise-section, .oral-practice-section {
+        display: none;
+    }
+    
+    .lesson-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px var(--shadow);
+        margin-bottom: 20px;
+        border-left: 4px solid var(--secondary);
+    }
+    
+    .lesson-title {
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 15px;
+        font-size: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .lesson-desc {
+        line-height: 1.7;
+        margin-bottom: 20px;
+        color: var(--dark);
+        font-size: 15px;
+        background: var(--light-gray);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 3px solid var(--secondary);
+    }
+    
+    .language-tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        background: white;
+        border-radius: 8px 8px 0 0;
+        overflow: hidden;
+    }
+    
+    .language-tab {
+        padding: 12px 20px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        background: var(--light-gray);
+        transition: all 0.3s ease;
+        flex: 1;
+        text-align: center;
+        font-weight: 500;
+    }
+    
+    .language-tab.active {
+        border-bottom: 2px solid var(--secondary);
+        color: var(--secondary);
+        background: white;
+        font-weight: 600;
+    }
+    
+    .language-tab:hover {
+        background: white;
+    }
+    
+    .language-content {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 0 0 8px 8px;
+        line-height: 1.7;
+    }
+    
+    .language-content.active {
+        display: block;
+    }
+    
+    .language-content h4 {
+        color: var(--primary);
+        margin: 20px 0 12px 0;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    
+    .language-content h5 {
+        color: var(--dark);
+        margin: 18px 0 10px 0;
+        font-weight: 600;
+        font-size: 15px;
+    }
+    
+    .language-content p {
+        margin-bottom: 12px;
+        color: var(--dark);
+        font-size: 15px;
+    }
+    
+    .language-content strong {
+        color: var(--primary);
+        font-weight: 600;
+    }
+    
+    .language-content ul {
+        margin: 10px 0 15px 20px;
+    }
+    
+    .language-content li {
+        margin-bottom: 8px;
+    }
+    
+    .lesson-image {
+        text-align: center;
+        font-size: 48px;
+        margin: 25px 0;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px var(--shadow);
+    }
+    
+    .exercise-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px var(--shadow);
+        border-left: 4px solid var(--success);
+    }
+    
+    .exercise-question {
+        font-size: 18px;
+        margin-bottom: 25px;
+        font-weight: 500;
+        color: var(--primary);
+        line-height: 1.6;
+    }
+    
+    .exercise-counter {
+        font-size: 14px;
+        color: var(--gray);
+        margin-bottom: 20px;
+        text-align: center;
+        background: var(--light-gray);
+        padding: 10px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+    
+    .input-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+    
+    input[type="text"] {
+        width: 100%;
+        padding: 15px 50px 15px 18px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        transition: all 0.3s;
+        background: white;
+        font-family: inherit;
+    }
+    
+    input[type="text"]:focus {
+        border-color: var(--secondary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    
+    .voice-input-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--light-gray);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: var(--gray);
+    }
+    
+    .voice-input-btn:hover {
+        background: var(--secondary);
+        color: white;
+    }
+    
+    .voice-input-btn.recording {
+        background: var(--accent);
+        color: white;
+        animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: translateY(-50%) scale(1); }
+        50% { transform: translateY(-50%) scale(1.1); }
+        100% { transform: translateY(-50%) scale(1); }
+    }
+    
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 25px;
+    }
+    
+    button {
+        padding: 14px 22px;
+        font-size: 15px;
+        border: none;
+        border-radius: 8px;
+        background-color: var(--secondary);
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 500;
+        flex: 1;
+        min-width: 140px;
+    }
+    
+    button:hover {
+        background-color: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px var(--shadow);
+    }
+    
+    button:active {
+        transform: translateY(0);
+    }
+    
+    button.secondary {
+        background-color: var(--success);
+    }
+    
+    button.secondary:hover {
+        background-color: #219653;
+    }
+    
+    button.accent {
+        background-color: var(--accent);
+    }
+    
+    button.accent:hover {
+        background-color: #c0392b;
+    }
+    
+    button.outline {
+        background-color: transparent;
+        border: 1px solid var(--secondary);
+        color: var(--secondary);
+    }
+    
+    button.outline:hover {
+        background-color: var(--secondary);
+        color: white;
+    }
+    
+    .message {
+        margin: 25px 0;
+        font-size: 15px;
+        font-weight: 500;
+        padding: 18px;
+        border-radius: 8px;
+        text-align: center;
+        border-left: 4px solid transparent;
+    }
+    
+    .success {
+        background-color: #d4f4e0;
+        color: #155724;
+        border-left-color: var(--success);
+    }
+    
+    .error {
+        background-color: #fde8e8;
+        color: #721c24;
+        border-left-color: var(--accent);
+    }
+    
+    .info {
+        background-color: #e3f2fd;
+        color: #0c5460;
+        border-left-color: var(--secondary);
+    }
+    
+    .voice-controls {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .oral-practice-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px var(--shadow);
+        border-left: 4px solid var(--warning);
+        text-align: center;
+    }
+    
+    .oral-practice-title {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-weight: 600;
+        font-size: 18px;
+    }
+    
+    .oral-instruction {
+        margin-bottom: 25px;
+        color: var(--dark);
+        line-height: 1.6;
+    }
+    
+    .recording-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin: 25px 0;
+    }
+    
+    .record-btn {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: none;
+        background: var(--light-gray);
+        color: var(--gray);
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .record-btn:hover {
+        background: var(--secondary);
+        color: white;
+    }
+    
+    .record-btn.recording {
+        background: var(--accent);
+        color: white;
+        animation: pulse 1.5s infinite;
+    }
+    
+    .recording-timer {
+        font-size: 14px;
+        color: var(--gray);
+        font-weight: 500;
+    }
+    
+    .audio-playback {
+        width: 100%;
+        margin: 20px 0;
+    }
+    
+    .send-audio-btn {
+        background: var(--success);
+    }
+    
+    .send-audio-btn:hover {
+        background: #219653;
+    }
+    
+    .contact-form {
+        display: none;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px var(--shadow);
+        margin-top: 20px;
+        border-left: 4px solid var(--warning);
+    }
+    
+    .contact-form h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--dark);
+    }
+    
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        font-family: inherit;
+        font-size: 15px;
+        transition: all 0.3s;
+    }
+    
+    .form-group input:focus, .form-group textarea:focus {
+        border-color: var(--secondary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .completion-message {
+        text-align: center;
+        padding: 40px 30px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px var(--shadow);
+    }
+    
+    .completion-message h3 {
+        color: var(--success);
+        margin-bottom: 15px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    
+    .completion-message p {
+        margin-bottom: 10px;
+        color: var(--dark);
+        font-size: 16px;
+    }
+    
+    .offline-notice {
+        background: #fff3cd;
+        color: #856404;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid var(--warning);
+        font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+        .bot-container {
+            padding: 20px;
+        }
+        
+        .content-area {
+            padding: 20px;
+        }
+        
+        .navigation-buttons {
+            flex-direction: column;
+        }
+        
+        button {
+            width: 100%;
+        }
+        
+        .language-tabs {
+            flex-direction: column;
+        }
+        
+        .button-container {
+            flex-direction: column;
+        }
+        
+        .voice-controls {
+            flex-direction: column;
+        }
+        
+        .lesson-content, .exercise-content {
+            padding: 20px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="bot-container">
+    <div class="bot-header">
+        <div class="bot-avatar">🤖</div>
+        <h2>Bot Enseignant Automatique</h2>
+        <div class="bot-subtitle">Français - Malagasy | 10 Leçons Complètes</div>
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText"></div>
+    
+    <div class="navigation-buttons">
+        <button onclick="previousLesson()" id="prevLessonBtn" class="outline">← Leçon précédente</button>
+        <button onclick="showOralPractice()" id="oralPracticeBtn" class="accent">🎤 Pratique Orale</button>
+        <button onclick="showContactForm()" id="contactBtn" class="outline">Contact & Aide</button>
+        <button onclick="nextLesson()" id="nextLessonBtn" class="outline">Nouvelle leçon →</button>
+    </div>
+    
+    <div class="content-area">
+        <div class="typing-indicator" id="typingIndicator">
+            Le bot est en train d'écrire <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+        </div>
+        
+        <div class="lesson-section" id="lessonSection">
+            <div id="lessonContent"></div>
+            <div class="button-container">
+                <button onclick="startLesson()" id="startLessonBtn" class="secondary">Commencer les exercices</button>
+                <button onclick="readAloud()" id="readAloudBtn" class="outline">🎧 Écouter la leçon</button>
+            </div>
+        </div>
+        
+        <div class="exercise-section" id="exerciseSection">
+            <div id="exerciseContent"></div>
+            <div class="button-container">
+                <button onclick="submitAnswer()" id="submitBtn" class="secondary">Valider la réponse</button>
+                <button onclick="showCorrection()" id="correctionBtn" class="outline">Voir correction</button>
+                <button onclick="backToLesson()" id="backBtn" class="outline">← Retour à la leçon</button>
+                <button onclick="nextExercise()" id="nextBtn">Exercice suivant →</button>
+            </div>
+        </div>
+        
+        <div class="oral-practice-section" id="oralPracticeSection">
+            <div class="oral-practice-content">
+                <div class="oral-practice-title">🎤 Pratique Orale</div>
+                <div class="oral-instruction">
+                    <p>Enregistrez votre prononciation et envoyez-la pour évaluation.</p>
+                    <p><strong>Note:</strong> Cette fonctionnalité nécessite une connexion Internet.</p>
+                </div>
+                
+                <div class="recording-controls">
+                    <button class="record-btn" id="recordBtn">
+                        🎤
+                    </button>
+                    <div class="recording-timer" id="recordingTimer">00:00</div>
+                </div>
+                
+                <div class="audio-playback" id="audioPlayback" style="display: none;">
+                    <audio controls id="recordedAudio"></audio>
+                </div>
+                
+                <div class="button-container">
+                    <button onclick="sendAudio()" id="sendAudioBtn" class="send-audio-btn" style="display: none;">
+                        📤 Envoyer l'audio
+                    </button>
+                    <button onclick="backToLesson()" class="outline">← Retour à la leçon</button>
+                </div>
+                
+                <div class="offline-notice" id="offlineNotice" style="display: none;">
+                    ⚠️ Vous êtes hors ligne. La pratique orale nécessite une connexion Internet.
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-form" id="contactForm">
+            <h3>Formulaire de Contact</h3>
+            <p>Si le bot ne peut pas répondre à votre question, veuillez remplir ce formulaire :</p>
+            
+            <div class="form-group">
+                <label for="email">Votre email :</label>
+                <input type="email" id="email" placeholder="votre@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Sujet :</label>
+                <input type="text" id="subject" placeholder="Sujet de votre message">
+            </div>
+            
+            <div class="form-group">
+                <label for="messageText">Votre message :</label>
+                <textarea id="messageText" placeholder="Décrivez votre problème ou question en détail..."></textarea>
+            </div>
+            
+            <div class="button-container">
+                <button onclick="sendContactForm()" class="secondary">Envoyer le message</button>
+                <button onclick="hideContactForm()" class="outline">Annuler</button>
+            </div>
+        </div>
+        
+        <div class="completion-message" id="completionMessage" style="display:none;">
+            <h3>🎉 Félicitations !</h3>
+            <p>Vous avez terminé toutes les leçons !</p>
+            <p>Votre score final : <strong id="finalScore">0</strong> points</p>
+            <div class="button-container" style="justify-content: center; margin-top: 20px;">
+                <button onclick="resetAll()" class="secondary">Recommencer depuis le début</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+// Les 10 leçons avec les titres demandés
+const lessons = [
+    {
+        id: 1,
+        title: "LES NOMS ET LES ARTICLES",
+        titleMg: "NY ANARANA SY NY LAHATSORATRA",
+        description: {
+            fr: "Comprendre les noms et les articles en français : définis, indéfinis et partitifs.",
+            mg: "Ny fahatakarana ny anarana sy ny lahatsoratra amin'ny teny frantsay: voafaritra, tsy voafaritra ary ampahany."
+        },
+        content: {
+            fr: `
+                <h4>Les Noms (Nouns)</h4>
+                <p>En français, les noms ont un genre (masculin/féminin) et un nombre (singulier/pluriel).</p>
+                
+                <h4>Suffixes des noms masculins</h4>
+                <p>Les noms masculins se terminent souvent par :</p>
+                <ul>
+                    <li><strong>-age</strong> : le voyage, le fromage, le garage</li>
+                    <li><strong>-ment</strong> : le gouvernement, le traitement, le mouvement</li>
+                    <li><strong>-eau</strong> : le château, le bateau, le manteau</li>
+                    <li><strong>-isme</strong> : le capitalisme, le tourisme, l'optimisme</li>
+                    <li><strong>-ier</strong> : le fermier, le pommier, le cahier</li>
+                    <li><strong>-on</strong> : le ballon, le wagon, le ponton</li>
+                    <li><strong>-in</strong> : le jardin, le matin, le chemin</li>
+                </ul>
+                
+                <h4>Suffixes des noms féminins</h4>
+                <p>Les noms féminins se terminent souvent par :</p>
+                <ul>
+                    <li><strong>-tion</strong> : la nation, la situation, l'éducation</li>
+                    <li><strong>-sion</strong> : la télévision, la décision, la passion</li>
+                    <li><strong>-té</strong> : la beauté, la liberté, la santé</li>
+                    <li><strong>-ière</strong> : la fermière, la pommière, la lumière</li>
+                    <li><strong>-esse</strong> : la richesse, la tristesse, la jeunesse</li>
+                    <li><strong>-ette</strong> : la chaussette, la fourchette, l'allumette</li>
+                    <li><strong>-ade</strong> : la promenade, la limonade, la salade</li>
+                </ul>
+                
+                <h4>Les Articles Définis</h4>
+                <p>• <strong>le</strong> - masculin singulier (le livre)</p>
+                <p>• <strong>la</strong> - féminin singulier (la table)</p>
+                <p>• <strong>l'</strong> - devant une voyelle (l'école)</p>
+                <p>• <strong>les</strong> - pluriel (les livres, les tables)</p>
+                
+                <h4>Les Articles Indéfinis</h4>
+                <p>• <strong>un</strong> - masculin singulier (un livre)</p>
+                <p>• <strong>une</strong> - féminin singulier (une table)</p>
+                <p>• <strong>des</strong> - pluriel (des livres, des tables)</p>
+                
+                <h4>Les Articles Partitifs</h4>
+                <p>• <strong>du</strong> - masculin (du pain)</p>
+                <p>• <strong>de la</strong> - féminin (de la confiture)</p>
+                <p>• <strong>de l'</strong> - devant voyelle (de l'eau)</p>
+                <p>• <strong>des</strong> - pluriel (des légumes)</p>
+            `,
+            mg: `
+                <h4>Ny Anarana (Nouns)</h4>
+                <p>Amin'ny teny frantsay, ny anarana dia manana lahy sy vavy ary isa (tokana/maro).</p>
+                
+                <h4>Suffixe an'ny anarana lahy</h4>
+                <p>Ny anarana lahy dia mifarana amin'ny :</p>
+                <ul>
+                    <li><strong>-age</strong> : ny dia, ny fromazy, ny garazy</li>
+                    <li><strong>-ment</strong> : ny governemanta, ny fitsaboana, ny fihetsehana</li>
+                    <li><strong>-eau</strong> : ny lapa, ny sambo, ny palitao</li>
+                </ul>
+                
+                <h4>Suffixe an'ny anarana vavy</h4>
+                <p>Ny anarana vavy dia mifarana amin'ny :</p>
+                <ul>
+                    <li><strong>-tion</strong> : ny firenena, ny toe-javatra, ny fanabeazana</li>
+                    <li><strong>-sion</strong> : ny fahitalavitra, ny fanapahan-kevitra, ny fitiavan-tanindrazana</li>
+                    <li><strong>-té</strong> : ny hatsarana, ny fahafahana, ny fahasalamana</li>
+                </ul>
+                
+                <h4>Ny Lahatsoratra Voafaritra</h4>
+                <p>• <strong>le</strong> - lahy tokana (le livre - ny boky)</p>
+                <p>• <strong>la</strong> - vavy tokana (la table - ny latabatra)</p>
+                <p>• <strong>l'</strong> - eo anoloan'ny zanatsoratra (l'école - ny sekoly)</p>
+                <p>• <strong>les</strong> - maro (les livres - ny boky)</p>
+                
+                <h4>Ny Lahatsoratra Tsy Voafaritra</h4>
+                <p>• <strong>un</strong> - lahy tokana (un livre - boky iray)</p>
+                <p>• <strong>une</strong> - vavy tokana (une table - latabatra iray)</p>
+                <p>• <strong>des</strong> - maro (des livres - boky sasany)</p>
+            `
+        },
+        image: "📚",
+        exercises: [
+            {
+                question: "Completez avec l'article défini : ___ maison est grande.",
+                questionMg: "Fenoy amin'ny lahatsoratra voafaritra : ___ maison est grande.",
+                answer: "la",
+                correction: "la maison est grande - 'maison' est un nom féminin singulier"
+            },
+            {
+                question: "Completez avec l'article indéfini : J'ai ___ chat noir.",
+                questionMg: "Fenoy amin'ny lahatsoratra tsy voafaritra : J'ai ___ chat noir.",
+                answer: "un",
+                correction: "J'ai un chat noir - 'chat' est un nom masculin singulier"
+            },
+            {
+                question: "Completez avec l'article partitif : Je mange ___ pain.",
+                questionMg: "Fenoy amin'ny lahatsoratra ampahany : Je mange ___ pain.",
+                answer: "du",
+                correction: "Je mange du pain - 'pain' est un nom masculin non comptable"
+            }
+        ]
+    },
+    {
+        id: 2,
+        title: "EMPLOIS DU VERBE DEVOIR DANS UNE PHRASE",
+        titleMg: "NY FAMPIASANA NY MATOANTENY DEVOIR AMINNY FEHENTENY",
+        description: {
+            fr: "Maîtriser les différentes utilisations du verbe devoir dans des contextes variés.",
+            mg: "Ny fahafantarana ny fampiasana samihafa amin'ny matoanteny devoir amin'ny toe-javatra isan-karazany."
+        },
+        content: {
+            fr: `
+                <h4>Le Verbe DEVOIR - Conjugaison au Présent</h4>
+                <p>• Je dois</p>
+                <p>• Tu dois</p>
+                <p>• Il/Elle doit</p>
+                <p>• Nous devons</p>
+                <p>• Vous devez</p>
+                <p>• Ils/Elles doivent</p>
+                
+                <h4>Les différents emplois de DEVOIR :</h4>
+                
+                <h5>1. Expression de l'obligation</h5>
+                <p>• <strong>Je dois étudier</strong> - I have to study (obligation forte)</p>
+                <p>• <strong>Tu dois finir ton travail</strong> - You must finish your work</p>
+                
+                <h5>2. Expression de la probabilité</h5>
+                <p>• <strong>Il doit être fatigué</strong> - He must be tired (supposition)</p>
+                <p>• <strong>Elle doit arriver bientôt</strong> - She should arrive soon</p>
+                
+                <h5>3. Expression du conseil</h5>
+                <p>• <strong>Tu devrais te reposer</strong> - You should rest (conseil)</p>
+                <p>• <strong>Nous devrions partir tôt</strong> - We should leave early</p>
+            `,
+            mg: `
+                <h4>Ny matoanteny DEVOIR - Conjugaison amin'ny Présent</h4>
+                <p>• Izaho dia tokony</p>
+                <p>• Ianão dia tokony</p>
+                <p>• Izy dia tokony</p>
+                <p>• Izahay dia tokony</p>
+                <p>• Ianareo dia tokony</p>
+                <p>• Izy ireo dia tokony</p>
+                
+                <h4>Ny fampiasana samihafa amin'ny DEVOIR :</h4>
+                
+                <h5>1. Fanehoana ny adidy</h5>
+                <p>• <strong>Je dois étudier</strong> - Tsy maintsy mianatra aho</p>
+                <p>• <strong>Tu dois finir ton travail</strong> - Tsy maintsy avy vita ny asa ianao</p>
+                
+                <h5>2. Fanehoana ny mety hitranga</h5>
+                <p>• <strong>Il doit être fatigué</strong> - Angamba reraka izy</p>
+                <p>• <strong>Elle doit arriver bientôt</strong> - Mety ho avy any aoriana kely izy</p>
+                
+                <h5>3. Fanehoana ny torohevitra</h5>
+                <p>• <strong>Tu devrais te reposer</strong> - Tokony hiala sasatra ianao</p>
+                <p>• <strong>Nous devrions partir tôt</strong> - Tokony hiala aloha isika</p>
+            `
+        },
+        image: "⚖️",
+        exercises: [
+            {
+                question: "Completez : Je ___ faire mes devoirs.",
+                questionMg: "Fenoy : Je ___ faire mes devoirs.",
+                answer: "dois",
+                correction: "Je dois faire mes devoirs - expression d'obligation"
+            },
+            {
+                question: "Completez : Il ___ être malade, il a de la fièvre.",
+                questionMg: "Fenoy : Il ___ être malade, il a de la fièvre.",
+                answer: "doit",
+                correction: "Il doit être malade - expression de probabilité"
+            },
+            {
+                question: "Completez : Tu ___ visiter ce musée, il est magnifique.",
+                questionMg: "Fenoy : Tu ___ visiter ce musée, il est magnifique.",
+                answer: "devrais",
+                correction: "Tu devrais visiter ce musée - expression de conseil"
+            }
+        ]
+    }
+    // Les autres leçons continueraient ici...
+];
+
+// Récupérer l'état depuis localStorage
+let currentLessonIndex = parseInt(localStorage.getItem("currentLessonIndex")) || 0;
+let currentExerciseIndex = parseInt(localStorage.getItem("currentExerciseIndex")) || 0;
+let score = parseInt(localStorage.getItem("score")) || 0;
+let speechSynthesis = window.speechSynthesis;
+let recognition = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let recordingTimer = null;
+let recordingSeconds = 0;
+
+// Initialiser la reconnaissance vocale si disponible
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.lang = 'fr-FR';
+    recognition.interimResults = false;
+}
+
+// Vérifier la connexion Internet
+function checkOnlineStatus() {
+    if (!navigator.onLine) {
+        document.getElementById('offlineNotice').style.display = 'block';
+        return false;
+    }
+    document.getElementById('offlineNotice').style.display = 'none';
+    return true;
+}
+
+// Mettre à jour la barre de progression
+function updateProgress() {
+    const totalExercises = lessons.reduce((total, lesson) => total + lesson.exercises.length, 0);
+    const completedExercises = lessons.slice(0, currentLessonIndex).reduce((total, lesson) => total + lesson.exercises.length, 0) + currentExerciseIndex;
+    const progressPercentage = (completedExercises / totalExercises) * 100;
+    
+    document.getElementById("progressBar").style.width = `${progressPercentage}%`;
+    document.getElementById("progressText").textContent = 
+        `Progression: ${Math.round(progressPercentage)}% | Leçon ${currentLessonIndex + 1}/${lessons.length} | Score: ${score}`;
+}
+
+// Afficher la leçon actuelle avec délai
+function showLesson() {
+    if(currentLessonIndex >= lessons.length) {
+        document.getElementById("finalScore").textContent = score;
+        document.getElementById("completionMessage").style.display = "block";
+        document.getElementById("lessonSection").style.display = "none";
+        document.getElementById("exerciseSection").style.display = "none";
+        updateProgress();
+        return;
+    }
+    
+    // Afficher l'indicateur de frappe
+    document.getElementById("typingIndicator").style.display = "block";
+    document.getElementById("lessonSection").style.display = "none";
+    document.getElementById("exerciseSection").style.display = "none";
+    document.getElementById("oralPracticeSection").style.display = "none";
+    document.getElementById("contactForm").style.display = "none";
+    
+    // Délai de 5 secondes
+    setTimeout(() => {
+        document.getElementById("typingIndicator").style.display = "none";
+        document.getElementById("lessonSection").style.display = "block";
+        
+        const lesson = lessons[currentLessonIndex];
+        let content = `
+            <div class="lesson-title">${lesson.title} | ${lesson.titleMg}</div>
+            <div class="lesson-desc">
+                <strong>Français:</strong> ${lesson.description.fr}<br>
+                <strong>Malagasy:</strong> ${lesson.description.mg}
+            </div>
+            
+            <div class="language-tabs">
+                <div class="language-tab active" onclick="switchLanguage('fr')">Français</div>
+                <div class="language-tab" onclick="switchLanguage('mg')">Malagasy</div>
+            </div>
+            
+            <div class="language-content active" id="frContent">
+                ${lesson.content.fr}
+            </div>
+            
+            <div class="language-content" id="mgContent">
+                ${lesson.content.mg}
+            </div>
+            
+            <div class="lesson-image">${lesson.image}</div>
+        `;
+        
+        document.getElementById("lessonContent").innerHTML = content;
+        
+        // Mettre à jour les boutons de navigation
+        document.getElementById("prevLessonBtn").style.display = currentLessonIndex > 0 ? "inline-block" : "none";
+        document.getElementById("nextLessonBtn").style.display = currentLessonIndex < lessons.length - 1 ? "inline-block" : "none";
+        
+        updateProgress();
+    }, 5000);
+}
+
+// Changer la langue d'affichage
+function switchLanguage(lang) {
+    document.querySelectorAll('.language-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    document.querySelectorAll('.language-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    document.querySelector(`.language-tab:nth-child(${lang === 'fr' ? 1 : 2})`).classList.add('active');
+    document.getElementById(`${lang}Content`).classList.add('active');
+}
+
+// Commencer les exercices de la leçon actuelle
+function startLesson() {
+    document.getElementById("typingIndicator").style.display = "block";
+    document.getElementById("lessonSection").style.display = "none";
+    
+    setTimeout(() => {
+        document.getElementById("typingIndicator").style.display = "none";
+        document.getElementById("exerciseSection").style.display = "block";
+        currentExerciseIndex = 0;
+        localStorage.setItem("currentExerciseIndex", currentExerciseIndex);
+        showExercise();
+    }, 3000);
+}
+
+// Retourner à la leçon depuis les exercices
+function backToLesson() {
+    document.getElementById("exerciseSection").style.display = "none";
+    document.getElementById("oralPracticeSection").style.display = "none";
+    document.getElementById("contactForm").style.display = "none";
+    document.getElementById("lessonSection").style.display = "block";
+    document.getElementById("message").textContent = "";
+    document.getElementById("message").className = "message";
+}
+
+// Aller à la leçon précédente
+function previousLesson() {
+    if(currentLessonIndex > 0) {
+        currentLessonIndex--;
+        localStorage.setItem("currentLessonIndex", currentLessonIndex);
+        showLesson();
+    }
+}
+
+// Aller à la leçon suivante
+function nextLesson() {
+    if(currentLessonIndex < lessons.length - 1) {
+        currentLessonIndex++;
+        localStorage.setItem("currentLessonIndex", currentLessonIndex);
+        showLesson();
+    }
+}
+
+// Afficher exercice actuel
+function showExercise() {
+    const exercises = lessons[currentLessonIndex].exercises;
+    if(currentExerciseIndex >= exercises.length) {
+        // Tous les exercices de cette leçon sont terminés
+        document.getElementById("message").textContent = "🎉 Félicitations ! Vous avez terminé tous les exercices de cette leçon !";
+        document.getElementById("message").className = "message success";
+        
+        // Retour automatique à la leçon après 3 secondes
+        setTimeout(() => {
+            backToLesson();
+        }, 3000);
+        return;
+    }
+    
+    const ex = exercises[currentExerciseIndex];
+    let content = `
+        <div class="exercise-counter">
+            Exercice ${currentExerciseIndex + 1}/${exercises.length} - Leçon ${currentLessonIndex + 1}/${lessons.length}
+        </div>
+        <div class="exercise-question">
+            ${ex.question}<br>
+            <small style="color: var(--gray);">${ex.questionMg}</small>
+        </div>
+        <div class="input-group">
+            <input type="text" id="userAnswer" placeholder="Écrivez votre réponse ici...">
+            <button class="voice-input-btn" id="voiceInputBtn" title="Réponse vocale">🎤</button>
+        </div>
+    `;
+    
+    document.getElementById("exerciseContent").innerHTML = content;
+    
+    // Ajouter l'événement pour le bouton de reconnaissance vocale
+    document.getElementById("voiceInputBtn").addEventListener("click", startVoiceRecognition);
+    
+    document.getElementById("message").textContent = "";
+    document.getElementById("message").className = "message";
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("submitBtn").style.display = "inline-block";
+    document.getElementById("correctionBtn").style.display = "inline-block";
+    
+    updateProgress();
+}
+
+// Vérification de la réponse
+function submitAnswer() {
+    const exercises = lessons[currentLessonIndex].exercises;
+    const ex = exercises[currentExerciseIndex];
+    const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
+    const correctAnswer = ex.answer.toLowerCase();
+
+    if(userAnswer === correctAnswer) {
+        document.getElementById("message").textContent = "Bravo ! ✅ Réponse correcte !";
+        document.getElementById("message").className = "message success";
+        score += 10;
+        localStorage.setItem("score", score);
+        document.getElementById("submitBtn").style.display = "none";
+        document.getElementById("correctionBtn").style.display = "none";
+        document.getElementById("nextBtn").style.display = "inline-block";
+        updateProgress();
+    } else {
+        document.getElementById("message").textContent = "Ce n'est pas correct. 😅 Essayez encore ou regardez la correction.";
+        document.getElementById("message").className = "message error";
+    }
+}
+
+// Montrer correction
+function showCorrection() {
+    const exercises = lessons[currentLessonIndex].exercises;
+    const ex = exercises[currentExerciseIndex];
+    document.getElementById("message").textContent = "Correction : " + ex.correction;
+    document.getElementById("message").className = "message info";
+    document.getElementById("submitBtn").style.display = "none";
+    document.getElementById("correctionBtn").style.display = "none";
+    document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+// Passer à l'exercice suivant
+function nextExercise() {
+    currentExerciseIndex++;
+    localStorage.setItem("currentExerciseIndex", currentExerciseIndex);
+    showExercise();
+}
+
+// Lire la leçon à haute voix
+function readAloud() {
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        return;
+    }
+    
+    const lesson = lessons[currentLessonIndex];
+    const text = `${lesson.title}. ${lesson.description.fr}. ${lesson.content.fr.replace(/<[^>]*>/g, '')}`;
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+    
+    speechSynthesis.speak(utterance);
+}
+
+// Lire la question à haute voix
+function readQuestionAloud() {
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        return;
+    }
+    
+    const exercises = lessons[currentLessonIndex].exercises;
+    const ex = exercises[currentExerciseIndex];
+    const text = ex.question;
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+    
+    speechSynthesis.speak(utterance);
+}
+
+// Démarrer la reconnaissance vocale
+function startVoiceRecognition() {
+    if (!recognition) {
+        alert("La reconnaissance vocale n'est pas supportée par votre navigateur.");
+        return;
+    }
+    
+    const voiceBtn = document.getElementById("voiceInputBtn");
+    voiceBtn.classList.add("recording");
+    voiceBtn.innerHTML = "●";
+    
+    recognition.start();
+    
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("userAnswer").value = transcript;
+        voiceBtn.classList.remove("recording");
+        voiceBtn.innerHTML = "🎤";
+    };
+    
+    recognition.onerror = function(event) {
+        console.error("Erreur de reconnaissance vocale:", event.error);
+        voiceBtn.classList.remove("recording");
+        voiceBtn.innerHTML = "🎤";
+    };
+    
+    recognition.onend = function() {
+        voiceBtn.classList.remove("recording");
+        voiceBtn.innerHTML = "🎤";
+    };
+}
+
+// Afficher la pratique orale
+function showOralPractice() {
+    if (!checkOnlineStatus()) {
+        return;
+    }
+    
+    document.getElementById("lessonSection").style.display = "none";
+    document.getElementById("exerciseSection").style.display = "none";
+    document.getElementById("contactForm").style.display = "none";
+    document.getElementById("oralPracticeSection").style.display = "block";
+    
+    // Réinitialiser l'état d'enregistrement
+    document.getElementById("recordBtn").classList.remove("recording");
+    document.getElementById("recordBtn").innerHTML = "🎤";
+    document.getElementById("recordingTimer").textContent = "00:00";
+    document.getElementById("audioPlayback").style.display = "none";
+    document.getElementById("sendAudioBtn").style.display = "none";
+    recordingSeconds = 0;
+}
+
+// Démarrer l'enregistrement audio
+async function startRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("L'enregistrement audio n'est pas supporté par votre navigateur.");
+        return;
+    }
+    
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = (event) => {
+            audioChunks.push(event.data);
+        };
+        
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audioElement = document.getElementById("recordedAudio");
+            audioElement.src = audioUrl;
+            document.getElementById("audioPlayback").style.display = "block";
+            document.getElementById("sendAudioBtn").style.display = "inline-block";
+            
+            // Arrêter tous les tracks du stream
+            stream.getTracks().forEach(track => track.stop());
+        };
+        
+        mediaRecorder.start();
+        document.getElementById("recordBtn").classList.add("recording");
+        document.getElementById("recordBtn").innerHTML = "⏹";
+        
+        // Démarrer le minuteur
+        recordingSeconds = 0;
+        recordingTimer = setInterval(() => {
+            recordingSeconds++;
+            const minutes = Math.floor(recordingSeconds / 60);
+            const seconds = recordingSeconds % 60;
+            document.getElementById("recordingTimer").textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+        
+    } catch (error) {
+        console.error("Erreur d'enregistrement:", error);
+        alert("Impossible d'accéder au microphone. Vérifiez les permissions.");
+    }
+}
+
+// Arrêter l'enregistrement audio
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        document.getElementById("recordBtn").classList.remove("recording");
+        document.getElementById("recordBtn").innerHTML = "🎤";
+        
+        // Arrêter le minuteur
+        if (recordingTimer) {
+            clearInterval(recordingTimer);
+            recordingTimer = null;
+        }
+    }
+}
+
+// Gérer le clic sur le bouton d'enregistrement
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'recordBtn') {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            stopRecording();
+        } else {
+            startRecording();
+        }
+    }
+});
+
+// Envoyer l'audio (simulation)
+function sendAudio() {
+    document.getElementById("message").textContent = "✅ Audio envoyé pour évaluation !";
+    document.getElementById("message").className = "message success";
+    
+    // Simulation d'évaluation après 2 secondes
+    setTimeout(() => {
+        document.getElementById("message").textContent = "🎯 Bonne prononciation ! Continue comme ça !";
+        document.getElementById("message").className = "message success";
+    }, 2000);
+}
+
+// Afficher le formulaire de contact
+function showContactForm() {
+    document.getElementById("lessonSection").style.display = "none";
+    document.getElementById("exerciseSection").style.display = "none";
+    document.getElementById("oralPracticeSection").style.display = "none";
+    document.getElementById("contactForm").style.display = "block";
+}
+
+// Cacher le formulaire de contact
+function hideContactForm() {
+    document.getElementById("contactForm").style.display = "none";
+    document.getElementById("lessonSection").style.display = "block";
+}
+
+// Envoyer le formulaire de contact
+function sendContactForm() {
+    const email = document.getElementById("email").value;
+    const subject = document.getElementById("subject").value;
+    const messageText = document.getElementById("messageText").value;
+    
+    if (!email || !subject || !messageText) {
+        alert("Veuillez remplir tous les champs du formulaire.");
+        return;
+    }
+    
+    // Simuler l'envoi d'email (dans un cas réel, utiliser un service d'email)
+    const mailtoLink = `mailto:urminmanantena@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`De: ${email}\n\n${messageText}`)}`;
+    window.location.href = mailtoLink;
+    
+    document.getElementById("message").textContent = "Formulaire envoyé ! Redirection vers l'email...";
+    document.getElementById("message").className = "message success";
+    
+    // Réinitialiser le formulaire
+    document.getElementById("email").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("messageText").value = "";
+    
+    // Retour à la leçon après 3 secondes
+    setTimeout(() => {
+        hideContactForm();
+    }, 3000);
+}
+
+// Réinitialiser tout le parcours
+function resetAll() {
+    if(confirm("Voulez-vous vraiment réinitialiser tout le parcours ? Votre progression et votre score seront perdus.")) {
+        currentLessonIndex = 0;
+        currentExerciseIndex = 0;
+        score = 0;
+        localStorage.setItem("currentLessonIndex", currentLessonIndex);
+        localStorage.setItem("currentExerciseIndex", currentExerciseIndex);
+        localStorage.setItem("score", score);
+        showLesson();
+    }
+}
+
+// Vérifier le statut de connexion au chargement
+window.addEventListener('load', checkOnlineStatus);
+window.addEventListener('online', checkOnlineStatus);
+window.addEventListener('offline', checkOnlineStatus);
+
+// Démarrage
+showLesson();
+</script>
+
+</body>
+</html>
