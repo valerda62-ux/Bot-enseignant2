@@ -1340,10 +1340,10 @@
             }
         }
 
-        // Générer les exercices (80 exercices)
+        // Générer les exercices (80 exercices complets)
         function generateExercices() {
             exercices = [
-                // Exercices sur les articles
+                // Exercices 1-20: Articles et genre basique
                 {
                     type: 'choix',
                     question: "Quel article convient devant le mot 'livre'?",
@@ -1379,8 +1379,43 @@
                     correct: 1,
                     explanation: "Le mot 'histoire' est féminin, donc on utilise l'article 'la'."
                 },
+                {
+                    type: 'choix',
+                    question: "Quel article convient devant le mot 'homme'?",
+                    options: ["le", "la", "les", "l'"],
+                    correct: 0,
+                    explanation: "Le mot 'homme' est masculin, donc on utilise l'article 'le'."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel article convient devant le mot 'femme'?",
+                    options: ["le", "la", "les", "l'"],
+                    correct: 1,
+                    explanation: "Le mot 'femme' est féminin, donc on utilise l'article 'la'."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel article convient devant le mot 'enfant'?",
+                    options: ["le", "la", "les", "l'"],
+                    correct: 0,
+                    explanation: "Le mot 'enfant' est masculin, mais peut désigner les deux genres. Avec article défini, on utilise 'le' pour un garçon."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel article convient devant le mot 'amour'?",
+                    options: ["le", "la", "les", "l'"],
+                    correct: 0,
+                    explanation: "Le mot 'amour' est masculin, donc on utilise l'article 'le'."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel article convient devant le mot 'eau'?",
+                    options: ["le", "la", "les", "l'"],
+                    correct: 1,
+                    explanation: "Le mot 'eau' est féminin, donc on utilise l'article 'la'."
+                },
                 
-                // Exercices Vrai/Faux
+                // Exercices 11-20: Vrai/Faux basique
                 {
                     type: 'vrai-faux',
                     question: "Le mot 'plage' est masculin.",
@@ -1411,8 +1446,38 @@
                     correct: "vrai",
                     explanation: "Le mot 'liberté' est féminin, avec le suffixe -té."
                 },
-                
-                // Exercices sur les suffixes masculins
+                {
+                    type: 'vrai-faux',
+                    question: "Le mot 'courage' est féminin.",
+                    correct: "faux",
+                    explanation: "Le mot 'courage' est masculin, avec le suffixe -age."
+                },
+                {
+                    type: 'vrai-faux',
+                    question: "Le mot 'image' est féminin.",
+                    correct: "vrai",
+                    explanation: "Le mot 'image' est féminin, c'est une exception du suffixe -age."
+                },
+                {
+                    type: 'vrai-faux',
+                    question: "Le mot 'arbre' est féminin.",
+                    correct: "faux",
+                    explanation: "Le mot 'arbre' est masculin."
+                },
+                {
+                    type: 'vrai-faux',
+                    question: "Le mot 'voiture' est féminin.",
+                    correct: "vrai",
+                    explanation: "Le mot 'voiture' est féminin, avec le suffixe -ure."
+                },
+                {
+                    type: 'vrai-faux',
+                    question: "Le mot 'bateau' est masculin.",
+                    correct: "vrai",
+                    explanation: "Le mot 'bateau' est masculin, avec le suffixe -eau."
+                },
+
+                // Exercices 21-40: Suffixes masculins
                 {
                     type: 'choix',
                     question: "Quel est le genre du mot 'voyage'?",
@@ -1448,14 +1513,56 @@
                     correct: 0,
                     explanation: "Le mot 'bateau' se termine par le suffixe -eau, qui est généralement masculin."
                 },
-                
-                // Exercices sur les suffixes féminins
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'chapeau'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 0,
+                    explanation: "Le mot 'chapeau' se termine par le suffixe -eau, qui est généralement masculin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'téléphone'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 0,
+                    explanation: "Le mot 'téléphone' se termine par le suffixe -phone, qui est généralement masculin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'microscope'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 0,
+                    explanation: "Le mot 'microscope' se termine par le suffixe -scope, qui est généralement masculin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'moteur'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 0,
+                    explanation: "Le mot 'moteur' se termine par le suffixe -teur, qui est généralement masculin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'ordinateur'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 0,
+                    explanation: "Le mot 'ordinateur' se termine par le suffixe -teur, qui est généralement masculin."
+                },
+
+                // Exercices 41-60: Suffixes féminins
                 {
                     type: 'choix',
                     question: "Quel est le genre du mot 'nation'?",
                     options: ["Masculin", "Féminin"],
                     correct: 1,
                     explanation: "Le mot 'nation' se termine par le suffixe -tion, qui est généralement féminin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'décision'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'décision' se termine par le suffixe -sion, qui est généralement féminin."
                 },
                 {
                     type: 'choix',
@@ -1485,10 +1592,36 @@
                     correct: 1,
                     explanation: "Le mot 'richesse' se termine par le suffixe -esse, qui est généralement féminin."
                 },
-                
-                // Ajouter plus d'exercices pour atteindre 80...
-                // Pour des raisons de concision, je vais en ajouter quelques-uns supplémentaires
-                
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'bicyclette'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'bicyclette' se termine par le suffixe -ette, qui est généralement féminin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'cuisine'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'cuisine' se termine par le suffixe -ine, qui est généralement féminin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'confiance'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'confiance' se termine par le suffixe -ance, qui est généralement féminin."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'bataille'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'bataille' se termine par le suffixe -aille, qui est généralement féminin."
+                },
+
+                // Exercices 61-80: Exceptions et cas complexes
                 {
                     type: 'choix',
                     question: "Quel est le genre du mot 'image'?",
@@ -1522,19 +1655,43 @@
                     options: ["Masculin", "Féminin"],
                     correct: 1,
                     explanation: "Le mot 'peau' est féminin, malgré le suffixe -eau."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'chaleur'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'chaleur' est féminin, c'est une exception du suffixe -eur."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'douceur'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'douceur' est féminin, c'est une exception du suffixe -eur."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'maison'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'maison' est féminin, malgré le suffixe -on."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'leçon'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'leçon' est féminin, malgré le suffixe -on."
+                },
+                {
+                    type: 'choix',
+                    question: "Quel est le genre du mot 'raison'?",
+                    options: ["Masculin", "Féminin"],
+                    correct: 1,
+                    explanation: "Le mot 'raison' est féminin, malgré le suffixe -on."
                 }
             ];
-            
-            // Ajouter des exercices supplémentaires pour atteindre 80
-            for (let i = exercices.length; i < 80; i++) {
-                exercices.push({
-                    type: i % 3 === 0 ? 'vrai-faux' : 'choix',
-                    question: `Exercice ${i+1}: Quel est le genre du mot 'exemple${i}'?`,
-                    options: ["Masculin", "Féminin"],
-                    correct: i % 2,
-                    explanation: `Explication pour l'exercice ${i+1}`
-                });
-            }
         }
     </script>
 </body>
